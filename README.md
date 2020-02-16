@@ -23,15 +23,15 @@ Your friendly neighborhood importer that lets you import redirects from differen
 
 ![Screen1](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_1.png)
 
-Select file
+Step 1: Select data file and format
 
 ![Screen2](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_2.png)
 
-Inspect data, configure header mapping and target site
+Step 2: Inspect data, configure header mapping and target site, then hit import
 
 ![Screen3](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_3.png)
 
-Then get a summary with potential error details
+Step 3: After import is complete you get a summary with potential error details
 
 ## Credits
 
