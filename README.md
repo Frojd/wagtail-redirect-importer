@@ -16,7 +16,7 @@ Your friendly neighborhood importer that lets you import redirects from differen
 
 ## Credits
 
-- [django-import-export](https://github.com/django-import-export/django-import-export) - Pieces of the admin code are havily inspired by this library, it also includes the modules for formats and temporary storage.
+- [django-import-export](https://github.com/django-import-export/django-import-export) - Pieces of the admin code are heavily inspired by this library, it also includes the modules for formats and temporary storage.
 - [tablib](https://github.com/jazzband/tablib) - Enables us to load data from several data formats.
 
 ## License
