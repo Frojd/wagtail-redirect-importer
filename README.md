@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/frojd/wagtail-redirect-importer.svg?branch=develop)](https://travis-ci.org/frojd/wagtail-redirect-importer)
 # Wagtail Redirect Importer
 
 Your friendly neighborhood importer that lets you import redirects from different tabular data formats, such as .csv and .xls

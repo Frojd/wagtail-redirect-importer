@@ -2,7 +2,7 @@ language: python
 dist: xenial
 
 env:
- - WAGTAIL_VERSION=2.4
+ - WAGTAIL_VERSION=2.7
 
 python:
   - "3.5"
