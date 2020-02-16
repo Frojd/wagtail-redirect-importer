@@ -4,8 +4,7 @@
 Your friendly neighborhood importer that lets you import redirects from different tabular data formats, such as .csv and .xls
 
 ![Screen1](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_1.png)
-![Screen2](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_2.png)
-![Screen3](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_3.png)
+
 
 ## Features
 
@@ -18,6 +17,21 @@ Your friendly neighborhood importer that lets you import redirects from differen
     - df
     - Basically [all import formats supported by tablib](https://tablib.readthedocs.io/en/stable/formats/)
 - The cli tool `import_redirects` for powerusers
+
+
+## Screenshots
+
+![Screen1](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_1.png)
+
+Select file
+
+![Screen2](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_2.png)
+
+Inspect data, configure header mapping and target site
+
+![Screen3](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_3.png)
+
+Then get a summary with potential error details
 
 ## Credits
 
