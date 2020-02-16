@@ -3,9 +3,9 @@
 
 Your friendly neighborhood importer that lets you import redirects from different tabular data formats, such as .csv and .xls
 
-![Screen1](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen1.png)
-![Screen2](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen2.png)
-![Screen3](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen3.png)
+![Screen1](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_1.png)
+![Screen2](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_2.png)
+![Screen3](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_3.png)
 
 ## Features
 
