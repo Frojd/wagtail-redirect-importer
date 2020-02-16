@@ -1,0 +1,5 @@
+venv
+*.sqlite3
+*.csv
+example/wagtail_redirect_importer
+example/static
