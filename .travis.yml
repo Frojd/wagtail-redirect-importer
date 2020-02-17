@@ -1,8 +1,7 @@
 language: python
 
 env:
- - wagtail_version=2.3
- - wagtail_version=2.7.1
+ - wagtail_version=2.7.1  # LTS
  - wagtail_version=2.8
 
 python:
