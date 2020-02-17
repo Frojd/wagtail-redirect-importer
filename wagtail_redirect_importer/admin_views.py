@@ -149,7 +149,7 @@ def create_redirects_from_dataset(dataset, config):
         }
 
         if config['site']:
-            data['site'] = config['site']
+            data['site'] = config['site'].pk
 
         form = RedirectForm(data)
         if not form.is_valid():

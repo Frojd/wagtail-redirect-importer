@@ -143,6 +143,7 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
                 'wagtail_redirect_importer/import_summary.html',
             )
 
+            self.assertEqual(Redirect.objects.count(), 2)
             self.assertEqual(Redirect.objects.first().site, new_site)
 
     # TODO: Test other formats
