@@ -19,6 +19,30 @@ Your friendly neighborhood importer that lets you import redirects from differen
 - The cli tool `import_redirects` for powerusers
 
 
+## Requirements
+
+- Python 3.5+
+- Wagtail 2.7+
+
+
+## Installation
+
+Install the library:
+
+```
+pip install wagtail_redirect_importer
+```
+
+Add `wagtail_redirect_importer` to your `INSTALLED_APPS` in Django settings.
+
+```python
+INSTALLED_APPS = (
+    # ...
+    'wagtail_redirect_importer',
+)
+```
+
+
 ## Screenshots
 
 ![Screen1](https://raw.githubusercontent.com/frojd/wagtail-redirect-importer/develop/img/screen_1.png)
@@ -33,10 +57,12 @@ Step 2: Inspect data, configure header mapping and target site, then hit import
 
 Step 3: After import is complete you get a summary with potential error details
 
+
 ## Credits
 
 - [django-import-export](https://github.com/django-import-export/django-import-export) - Pieces of the admin code are heavily inspired by this library, it also includes the modules for formats and temporary storage.
 - [tablib](https://github.com/jazzband/tablib) - Enables us to load data from several data formats.
+
 
 ## License
 
