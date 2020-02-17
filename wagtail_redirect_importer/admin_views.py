@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.utils.encoding import force_str
+from django.utils.translation import ugettext as _
 from wagtail.core import hooks
 from wagtail.contrib.redirects.forms import RedirectForm
 from wagtail.contrib.redirects.permissions import permission_policy

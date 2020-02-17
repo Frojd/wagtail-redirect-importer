@@ -7,8 +7,8 @@ from wagtail.contrib.redirects.models import Redirect
 from wagtail.core.models import Page, Site
 from wagtail.tests.utils import WagtailTestUtils
 
+from ..base_formats import DEFAULT_FORMATS
 from ..admin_views import write_to_tmp_storage
-
 
 
 TEST_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -146,4 +146,68 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
             self.assertEqual(Redirect.objects.count(), 2)
             self.assertEqual(Redirect.objects.first().site, new_site)
 
-    # TODO: Test other formats
+    def test_import_xls(self):
+        f = '{}/files/example.xls'.format(TEST_ROOT)
+        (_, filename) = os.path.split(f)
+
+        with open(f, 'rb') as infile:
+            upload_file = SimpleUploadedFile(filename, infile.read())
+
+            self.assertEqual(Redirect.objects.all().count(), 0)
+
+            response = self.post({
+                'import_file': upload_file,
+                'input_format': '1',
+            })
+
+            self.assertEqual(
+                response.templates[0].name,
+                'wagtail_redirect_importer/confirm_import.html',
+            )
+
+            import_response = self.post_import({
+                **response.context['form'].initial,
+                'from_index': 0,
+                'to_index': 1,
+                'permanent': True,
+            })
+
+            self.assertEqual(
+                import_response.templates[0].name,
+                'wagtail_redirect_importer/import_summary.html',
+            )
+
+            self.assertEqual(Redirect.objects.all().count(), 3)
+
+    def test_import_xlsx(self):
+        f = '{}/files/example.xlsx'.format(TEST_ROOT)
+        (_, filename) = os.path.split(f)
+
+        with open(f, 'rb') as infile:
+            upload_file = SimpleUploadedFile(filename, infile.read())
+
+            self.assertEqual(Redirect.objects.all().count(), 0)
+
+            response = self.post({
+                'import_file': upload_file,
+                'input_format': '2',
+            })
+
+            self.assertEqual(
+                response.templates[0].name,
+                'wagtail_redirect_importer/confirm_import.html',
+            )
+
+            import_response = self.post_import({
+                **response.context['form'].initial,
+                'from_index': 0,
+                'to_index': 1,
+                'permanent': True,
+            })
+
+            self.assertEqual(
+                import_response.templates[0].name,
+                'wagtail_redirect_importer/import_summary.html',
+            )
+
+            self.assertEqual(Redirect.objects.all().count(), 3)
