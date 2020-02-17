@@ -24,7 +24,7 @@ python:
 #    env: wagtail_version=3.0.2
 
 install:
- - pip install -q wagtail==$wagtail_version tablib
+ - pip install -q wagtail==$wagtail_version tablib[xls,xlsx]
 
 script:
  - python runtests.py
