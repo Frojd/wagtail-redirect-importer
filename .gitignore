@@ -52,3 +52,4 @@ venv*
 
 example/wagtail_redirect_importer
 example/static
+example/mysite/static
