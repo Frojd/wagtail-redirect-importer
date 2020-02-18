@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include wagtail_redirect_importer *.html *.png *.gif *js *.css *jpg *jpeg *svg *py
+recursive-exclude wagtail_redirect_importer/tests *
