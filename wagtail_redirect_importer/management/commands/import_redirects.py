@@ -7,66 +7,55 @@ from wagtail.core.models import Site
 
 
 class Command(BaseCommand):
-    help = 'Imports redirects from .csv, .xls, .xlsx'
+    help = "Imports redirects from .csv, .xls, .xlsx"
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--src',
-            help='Path to file',
-            type=str,
-            required=True,
+            "--src", help="Path to file", type=str, required=True,
         )
         parser.add_argument(
-            '--site_id',
-            help='The site where redirects will be associated',
-            type=int,
+            "--site_id", help="The site where redirects will be associated", type=int,
         )
         parser.add_argument(
-            '--permanent',
-            help='Save redirects as permanent redirects',
+            "--permanent",
+            help="Save redirects as permanent redirects",
             type=bool,
             default=True,
         )
         parser.add_argument(
-            '--from_index',
-            help='The column where to read from link',
+            "--from_index",
+            help="The column where to read from link",
             default=0,
             type=int,
         )
         parser.add_argument(
-            '--to_index',
-            help='The column where to read to link',
-            default=1,
-            type=int,
+            "--to_index", help="The column where to read to link", default=1, type=int,
         )
         parser.add_argument(
-            '--dry_run',
+            "--dry_run",
             default=False,
-            help='Run only in test mode, will not create redirects',
+            help="Run only in test mode, will not create redirects",
             type=bool,
         )
         parser.add_argument(
-            '--ask',
-            help='Ask before creating',
-            default=False,
-            type=bool,
+            "--ask", help="Ask before creating", default=False, type=bool,
         )
         parser.add_argument(
-            '--format',
-            help='Source file format (.csv, .xls etc)',
-            default=',',
+            "--format",
+            help="Source file format (.csv, .xls etc)",
+            default=",",
             type=str,
         )
 
     def handle(self, *args, **options):
-        src = options['src']
-        from_index = options.pop('from_index')
-        to_index = options.pop('to_index')
-        site_id = options.pop('site_id', None)
-        permament = options.pop('permanent')
-        dry_run = options.pop('dry_run')
-        format_ = options.pop('format', None)
-        ask = options.pop('ask')
+        src = options["src"]
+        from_index = options.pop("from_index")
+        to_index = options.pop("to_index")
+        site_id = options.pop("site_id", None)
+        permament = options.pop("permanent")
+        dry_run = options.pop("dry_run")
+        format_ = options.pop("format", None)
+        ask = options.pop("ask")
 
         errors = []
         successes = 0
@@ -85,10 +74,10 @@ class Command(BaseCommand):
 
         _, extension = os.path.splitext(src)
 
-        if extension in ['.xls', '.xlsx']:
-            mode = 'rb'
+        if extension in [".xls", ".xlsx"]:
+            mode = "rb"
         else:
-            mode = 'r'
+            mode = "r"
 
         if not format_:
             format_ = extension
@@ -97,8 +86,9 @@ class Command(BaseCommand):
             imported_data = tablib.Dataset().load(fh.read(), format=format_)
 
             sample_data = tablib.Dataset(
-                *imported_data[:min(len(imported_data), 4)],
-                headers=imported_data.headers)
+                *imported_data[: min(len(imported_data), 4)],
+                headers=imported_data.headers
+            )
 
             try:
                 self.stdout.write("Sample data:")
@@ -106,7 +96,7 @@ class Command(BaseCommand):
             except:
                 self.stdout.write("Warning: Cannot display sample data")
 
-            self.stdout.write('--------------')
+            self.stdout.write("--------------")
 
             if site:
                 self.stdout.write("Using site: {}".format(site.hostname))
@@ -119,43 +109,37 @@ class Command(BaseCommand):
                 to_link = row[to_index]
 
                 data = {
-                    'old_path': from_link,
-                    'redirect_link': to_link,
-                    'is_permanent': permament,
+                    "old_path": from_link,
+                    "redirect_link": to_link,
+                    "is_permanent": permament,
                 }
 
                 if site:
-                    data['site'] = site.pk
+                    data["site"] = site.pk
 
                 form = RedirectForm(data)
                 if not form.is_valid():
-                    error = form.errors.as_text().replace('\n', '')
+                    error = form.errors.as_text().replace("\n", "")
                     self.stdout.write(
-                        '{}. Error: {} -> {} (Reason: {})'.format(
-                            total,
-                            from_link,
-                            to_link,
-                            error,
-                        ))
+                        "{}. Error: {} -> {} (Reason: {})".format(
+                            total, from_link, to_link, error,
+                        )
+                    )
                     errors.append(error)
                     continue
 
                 if ask:
-                    answer = input('{}. Found {} -> {} Create? Y/n: '.format(
-                        total,
-                        from_link,
-                        to_link,
-                    ))
+                    answer = input(
+                        "{}. Found {} -> {} Create? Y/n: ".format(
+                            total, from_link, to_link,
+                        )
+                    )
 
                     if answer != "Y":
                         skipped += 1
                         continue
                 else:
-                    self.stdout.write('{}. {} -> {}'.format(
-                        total,
-                        from_link,
-                        to_link,
-                    ))
+                    self.stdout.write("{}. {} -> {}".format(total, from_link, to_link,))
 
                 if dry_run:
                     successes += 1
@@ -176,7 +160,7 @@ class Command(BaseCommand):
         header_body = " | ".join(header)
         header_body = "| {} |".format(header_body)
 
-        delimiter = '-' * len(header_body)
+        delimiter = "-" * len(header_body)
 
-        out = '{}\n{}\n{}'.format(delimiter, header_body, delimiter)
+        out = "{}\n{}\n{}".format(delimiter, header_body, delimiter)
         return out

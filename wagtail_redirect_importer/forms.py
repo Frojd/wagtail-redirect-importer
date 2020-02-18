@@ -6,13 +6,8 @@ from wagtail.core.models import Site
 
 
 class ImportForm(forms.Form):
-    import_file = forms.FileField(
-        label=_('File to import')
-    )
-    input_format = forms.ChoiceField(
-        label=_('Format'),
-        choices=[],
-    )
+    import_file = forms.FileField(label=_("File to import"))
+    input_format = forms.ChoiceField(label=_("Format"), choices=[],)
 
     def __init__(self, import_formats, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,20 +16,14 @@ class ImportForm(forms.Form):
         for i, f in enumerate(import_formats):
             choices.append((str(i), f().get_title(),))
         if len(import_formats) > 1:
-            choices.insert(0, ('', '---'))
+            choices.insert(0, ("", "---"))
 
-        self.fields['input_format'].choices = choices
+        self.fields["input_format"].choices = choices
 
 
 class ConfirmImportForm(forms.Form):
-    from_index = forms.ChoiceField(
-        label=_('From field'),
-        choices=(),
-    )
-    to_index = forms.ChoiceField(
-        label=_('To field'),
-        choices=(),
-    )
+    from_index = forms.ChoiceField(label=_("From field"), choices=(),)
+    to_index = forms.ChoiceField(label=_("To field"), choices=(),)
     site = forms.ModelChoiceField(
         label=_("From site"),
         queryset=Site.objects.all(),
@@ -53,12 +42,12 @@ class ConfirmImportForm(forms.Form):
         for i, f in enumerate(headers):
             choices.append([str(i), f])
         if len(headers) > 1:
-            choices.insert(0, ('', '---'))
+            choices.insert(0, ("", "---"))
 
-        self.fields['from_index'].choices = choices
-        self.fields['to_index'].choices = choices
+        self.fields["from_index"].choices = choices
+        self.fields["to_index"].choices = choices
 
     def clean_import_file_name(self):
-        data = self.cleaned_data['import_file_name']
+        data = self.cleaned_data["import_file_name"]
         data = os.path.basename(data)
         return data
