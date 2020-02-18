@@ -64,7 +64,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'tablib',
+        'tablib[xls,xlsx]',
     ],
     license="MIT",
     zip_safe=False,
