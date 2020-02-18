@@ -1,0 +1,2 @@
+# Extend base.txt
+-r install.txt
