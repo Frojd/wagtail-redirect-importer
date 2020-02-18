@@ -54,7 +54,7 @@ except:  # NOQA
 setup(
     name='wagtail_redirect_importer',
     version=version,
-    description="""Lets you import redirects into Wagtail from different tabular data formats""",
+    description="""Lets you import redirects into Wagtail from different tabular data formats (like .csv, xls, xlsx)""",
     long_description=long_description,
     author='Fröjd',
     author_email='martin@marteinn.se',
