@@ -27,13 +27,13 @@ Your friendly neighborhood importer that lets you import redirects from differen
 
 ## Installation
 
-Install the library:
+1. Install the library:
 
 ```
 pip install wagtail_redirect_importer
 ```
 
-Add `wagtail_redirect_importer` to your `INSTALLED_APPS` in Django settings.
+2. Add `wagtail_redirect_importer` to your `INSTALLED_APPS` in Django settings.
 
 ```python
 INSTALLED_APPS = (
