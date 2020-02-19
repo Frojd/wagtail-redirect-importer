@@ -1,9 +1,14 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
+{% load static %}
+
 {% block titletag %}{% trans "Import redirects" %}{% endblock %}
 {% block content %}
     {% trans "Import redirects" as add_red_str %}
     {% include "wagtailadmin/shared/header.html" with title=add_red_str icon="redirect" %}
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'wagtail_redirect_importer/css/index.css' %}">
 
     {% if form.non_field_errors %}
         <div class="messages">
@@ -32,7 +37,7 @@
         </ul>
 
         <h2>{% trans "Preview" %}</h2>
-        <table class="listing">
+        <table class="listing listing-with-x-scroll">
             <thead>
                 <tr>
                     {% for column in dataset.headers %}

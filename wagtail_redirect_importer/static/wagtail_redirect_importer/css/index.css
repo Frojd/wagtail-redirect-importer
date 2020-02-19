@@ -1,0 +1,5 @@
+.listing-with-x-scroll {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
