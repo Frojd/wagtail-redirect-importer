@@ -43,7 +43,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--format",
             help="Source file format (.csv, .xls etc)",
-            default=",",
+            default="csv",
             type=str,
         )
 
