@@ -1,6 +1,7 @@
 import os
 
 import tablib
+from tablib.formats import registry
 from django.core.management.base import BaseCommand
 from wagtail.contrib.redirects.forms import RedirectForm
 from wagtail.core.models import Site
@@ -40,10 +41,12 @@ class Command(BaseCommand):
         parser.add_argument(
             "--ask", help="Ask before creating", default=False, type=bool,
         )
+
+        available_formats = [key for key in registry._formats]
         parser.add_argument(
             "--format",
             help="Source file format (.csv, .xls etc)",
-            default="csv",
+            choices=available_formats,
             type=str,
         )
 
@@ -73,14 +76,19 @@ class Command(BaseCommand):
             raise Exception("File '{0}' is empty".format(src))
 
         _, extension = os.path.splitext(src)
+        extension = extension.lstrip(".")
+        available_formats = [key for key in registry._formats]
+
+        if not format_ and extension not in available_formats:
+            raise Exception("Invalid format '{}'".format(extension))
+
+        if not format_:
+            format_ = extension
 
         if extension in [".xls", ".xlsx"]:
             mode = "rb"
         else:
             mode = "r"
-
-        if not format_:
-            format_ = extension
 
         with open(src, mode) as fh:
             imported_data = tablib.Dataset().load(fh.read(), format=format_)

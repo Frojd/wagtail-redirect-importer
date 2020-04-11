@@ -1,4 +1,5 @@
 from io import StringIO
+import os
 import tempfile
 
 from django.test import TestCase
@@ -6,6 +7,9 @@ from django.core.management import call_command
 from django.core.management.base import CommandError
 from wagtail.core.models import Site
 from wagtail.contrib.redirects.models import Redirect
+
+
+TEST_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
 class ImportCsvCommandTest(TestCase):
@@ -18,6 +22,13 @@ class ImportCsvCommandTest(TestCase):
         with self.assertRaisesMessage(Exception, "Missing file 'random'"):
             out = StringIO()
             call_command("import_redirects", src="random", stdout=out)
+
+    def test_invalid_extension_raises_error(self):
+        f = "{}/files/example.numbers".format(TEST_ROOT)
+
+        with self.assertRaisesMessage(Exception, "Invalid format 'numbers'"):
+            out = StringIO()
+            call_command("import_redirects", src=f, stdout=out)
 
     def test_empty_file_raises_error(self):
         empty_file = tempfile.NamedTemporaryFile()
