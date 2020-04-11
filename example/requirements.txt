@@ -3,3 +3,4 @@ wagtail>=2.8,<2.9
 tablib[xls,xlsx]>=0.14.0
 django-debug-toolbar
 wagtail_redirect_importer
+coverage

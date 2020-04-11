@@ -1,0 +1,16 @@
+[run]
+branch = true
+omit =
+    */tests/*
+    */migrations/*
+    */urls.py
+    */settings/*
+    */wsgi.py
+    home/*
+    mysite/*
+    search/*
+    manage.py
+source = .
+
+[report]
+show_missing = true
