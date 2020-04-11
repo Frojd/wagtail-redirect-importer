@@ -75,6 +75,7 @@ class Command(BaseCommand):
         if not os.path.getsize(src) > 0:
             raise Exception("File '{0}' is empty".format(src))
 
+
         _, extension = os.path.splitext(src)
         extension = extension.lstrip(".")
         available_formats = [key for key in registry._formats]
@@ -85,7 +86,7 @@ class Command(BaseCommand):
         if not format_:
             format_ = extension
 
-        if extension in [".xls", ".xlsx"]:
+        if extension in ["xls", "xlsx"]:
             mode = "rb"
         else:
             mode = "r"

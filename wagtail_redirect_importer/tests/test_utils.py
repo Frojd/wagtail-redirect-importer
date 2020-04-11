@@ -21,7 +21,9 @@ class UtilsTest(TestCase):
             upload_file = ContentFile(content_orig)
 
             import_formats = get_import_formats()
-            import_formats = [x for x in import_formats if x.__name__ == "CSV"]
+            import_formats = [
+                x for x in import_formats if x.__name__ == "CSV"
+            ]
             input_format = import_formats[0]()
             storage = write_to_tmp_storage(upload_file, input_format)
 

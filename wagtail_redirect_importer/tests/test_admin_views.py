@@ -33,7 +33,8 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
     def test_request_start_with_get_returns_initial_form(self):
         response = self.get()
         self.assertEqual(
-            response.templates[0].name, "wagtail_redirect_importer/choose_file.html",
+            response.templates[0].name,
+            "wagtail_redirect_importer/choose_file.html",
         )
 
     def test_empty_import_file_returns_error(self):
@@ -219,7 +220,7 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
 
             response = self.post({"import_file": upload_file, "input_format": "0",})
             self.assertTrue(
-                b"<h1>Imported file has a wrong encoding:" in response.content
+                b'<h1>Imported file has a wrong encoding:' in response.content
             )
 
     def test_not_valid_method_for_import_file(self):
@@ -233,7 +234,10 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
         with open(f, "rb") as infile:
             upload_file = SimpleUploadedFile(filename, infile.read())
 
-            response = self.post({"import_file": upload_file, "input_format": "0",})
+            response = self.post({
+                "import_file": upload_file,
+                "input_format": "0",
+            })
 
             import_response = self.post_import(
                 {

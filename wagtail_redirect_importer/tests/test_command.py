@@ -51,6 +51,20 @@ class ImportCsvCommandTest(TestCase):
 
         self.assertEqual(Redirect.objects.count(), 0)
 
+    def test_format_gets_picked_up_from_file_extension(self):
+        f = "{}/files/example.csv".format(TEST_ROOT)
+
+        out = StringIO()
+        call_command("import_redirects", src=f, stdout=out)
+        self.assertEqual(Redirect.objects.count(), 2)
+
+    def test_binary_formats_are_supported(self):
+        f = "{}/files/example.xls".format(TEST_ROOT)
+
+        out = StringIO()
+        call_command("import_redirects", src=f, stdout=out)
+        self.assertEqual(Redirect.objects.count(), 3)
+
     def test_redirect_gets_imported(self):
         invalid_file = tempfile.NamedTemporaryFile(mode="w+", encoding="utf-8")
         invalid_file.write("from,to\n")
