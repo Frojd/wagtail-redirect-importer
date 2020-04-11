@@ -30,6 +30,12 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
     def post_import(self, post_data={}):
         return self.client.post(reverse("wagtailredirectimporter:import"), post_data)
 
+    def test_request_start_with_get_returns_initial_form(self):
+        response = self.get()
+        self.assertEqual(
+            response.templates[0].name, "wagtail_redirect_importer/choose_file.html",
+        )
+
     def test_empty_import_file_returns_error(self):
         response = self.post({"import_file": "", "input_format": "0",})
 
