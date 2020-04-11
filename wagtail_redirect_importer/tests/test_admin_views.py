@@ -207,3 +207,17 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
             )
 
             self.assertEqual(Redirect.objects.all().count(), 3)
+
+    def test_unicode_error_when_importing(self):
+        f = "{}/files/example_faulty.csv".format(TEST_ROOT)
+        (_, filename) = os.path.split(f)
+
+        with open(f, "rb") as infile:
+            upload_file = SimpleUploadedFile(filename, infile.read())
+
+            self.assertEqual(Redirect.objects.all().count(), 0)
+
+            response = self.post({"import_file": upload_file, "input_format": "0",})
+            self.assertTrue(
+                b"<h1>Imported file has a wrong encoding:" in response.content
+            )

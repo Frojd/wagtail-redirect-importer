@@ -50,7 +50,7 @@ def start(request):
         dataset = input_format.create_dataset(data)
     except UnicodeDecodeError as e:
         return HttpResponse(_(u"<h1>Imported file has a wrong encoding: %s</h1>" % e))
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         return HttpResponse(_(u"<h1>%s encountered while trying to read file: %s</h1>" % (type(e).__name__, import_file.name)))
 
     initial = {
