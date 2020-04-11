@@ -225,3 +225,26 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
     def test_not_valid_method_for_import_file(self):
         response = self.client.get(reverse("wagtailredirectimporter:import"))
         self.assertEqual(response.status_code, 405)
+
+    def test_error_in_data_renders_confirm_view_on_import(self):
+        f = "{}/files/example.csv".format(TEST_ROOT)
+        (_, filename) = os.path.split(f)
+
+        with open(f, "rb") as infile:
+            upload_file = SimpleUploadedFile(filename, infile.read())
+
+            response = self.post({"import_file": upload_file, "input_format": "0",})
+
+            import_response = self.post_import(
+                {
+                    **response.context["form"].initial,
+                    "from_index": 0,
+                    "to_index": 1,
+                    "permanent": True,
+                    "site": 99,
+                }
+            )
+            self.assertEqual(
+                response.templates[0].name,
+                "wagtail_redirect_importer/confirm_import.html",
+            )
