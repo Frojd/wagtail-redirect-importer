@@ -1,6 +1,7 @@
 from io import StringIO
 import os
 import tempfile
+from unittest.mock import patch
 
 from django.test import TestCase
 from django.core.management import call_command
@@ -12,7 +13,7 @@ from wagtail.contrib.redirects.models import Redirect
 TEST_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
-class ImportCsvCommandTest(TestCase):
+class ImportRedirectsCommandTest(TestCase):
     def test_empty_command_raises_errors(self):
         with self.assertRaises(CommandError):
             out = StringIO()
@@ -233,6 +234,48 @@ class ImportCsvCommandTest(TestCase):
             src=invalid_file.name,
             format="csv",
             dry_run=True,
+            stdout=out,
+        )
+
+        self.assertEqual(Redirect.objects.count(), 0)
+
+    @patch(
+        "wagtail_redirect_importer.management.commands.import_redirects.get_input",
+        return_value="Y",
+    )
+    def test_successfull_ask_imports_redirect(self, get_input):
+        invalid_file = tempfile.NamedTemporaryFile(mode="w+", encoding="utf-8")
+        invalid_file.write("from,to\n")
+        invalid_file.write("/alpha,http://omega.test/")
+        invalid_file.seek(0)
+
+        out = StringIO()
+        call_command(
+            "import_redirects",
+            src=invalid_file.name,
+            format="csv",
+            ask=True,
+            stdout=out,
+        )
+
+        self.assertEqual(Redirect.objects.count(), 1)
+
+    @patch(
+        "wagtail_redirect_importer.management.commands.import_redirects.get_input",
+        return_value="N",
+    )
+    def test_nesative_ask_imports_redirect(self, get_input):
+        invalid_file = tempfile.NamedTemporaryFile(mode="w+", encoding="utf-8")
+        invalid_file.write("from,to\n")
+        invalid_file.write("/alpha,http://omega.test/")
+        invalid_file.seek(0)
+
+        out = StringIO()
+        call_command(
+            "import_redirects",
+            src=invalid_file.name,
+            format="csv",
+            ask=True,
             stdout=out,
         )
 

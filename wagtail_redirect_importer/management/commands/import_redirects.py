@@ -75,7 +75,6 @@ class Command(BaseCommand):
         if not os.path.getsize(src) > 0:
             raise Exception("File '{0}' is empty".format(src))
 
-
         _, extension = os.path.splitext(src)
         extension = extension.lstrip(".")
         available_formats = [key for key in registry._formats]
@@ -138,7 +137,7 @@ class Command(BaseCommand):
                     continue
 
                 if ask:
-                    answer = input(
+                    answer = get_input(
                         "{}. Found {} -> {} Create? Y/n: ".format(
                             total, from_link, to_link,
                         )
@@ -173,3 +172,7 @@ class Command(BaseCommand):
 
         out = "{}\n{}\n{}".format(delimiter, header_body, delimiter)
         return out
+
+
+def get_input(msg):
+    return input(msg)
