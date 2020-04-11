@@ -1,0 +1,9 @@
+version: '3.1'
+services:
+  web:
+    image: frojd/wagtail_redirect_importer_web
+    build: .
+    ports:
+      - 8000:8000
+    # volumes:
+    #   - "./wagtail_redirect_importer:/code/wagtail_redirect_importer:cached"
