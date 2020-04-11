@@ -162,17 +162,6 @@ class Command(BaseCommand):
         self.stdout.write("Skipped : {}".format(skipped))
         self.stdout.write("Errors: {}".format(len(errors)))
 
-    @staticmethod
-    def build_header(header):
-        header = map(lambda x: x or "", header)
-        header_body = " | ".join(header)
-        header_body = "| {} |".format(header_body)
 
-        delimiter = "-" * len(header_body)
-
-        out = "{}\n{}\n{}".format(delimiter, header_body, delimiter)
-        return out
-
-
-def get_input(msg):
+def get_input(msg):  # pragma: no cover
     return input(msg)
