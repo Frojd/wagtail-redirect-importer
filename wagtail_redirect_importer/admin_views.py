@@ -11,6 +11,7 @@ from wagtail.admin.auth import PermissionPolicyChecker, permission_denied
 from .base_formats import DEFAULT_FORMATS
 from .tmp_storages import TempFolderStorage
 from .forms import ImportForm, ConfirmImportForm
+from .utils import write_to_tmp_storage, get_import_formats
 
 
 from_encoding = "utf-8"
@@ -70,10 +71,6 @@ def start(request):
             "dataset": dataset,
         },
     )
-
-
-def get_import_formats():
-    return [f for f in DEFAULT_FORMATS if f().can_import()]
 
 
 @permission_checker.require_any("add")
@@ -173,13 +170,3 @@ def create_redirects_from_dataset(dataset, config):
         "successes": successes,
         "total": total,
     }
-
-
-def write_to_tmp_storage(import_file, input_format):
-    tmp_storage = TempFolderStorage()
-    data = bytes()
-    for chunk in import_file.chunks():
-        data += chunk
-
-        tmp_storage.save(data, input_format.get_read_mode())
-        return tmp_storage
