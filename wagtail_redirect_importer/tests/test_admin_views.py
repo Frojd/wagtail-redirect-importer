@@ -221,3 +221,7 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
             self.assertTrue(
                 b"<h1>Imported file has a wrong encoding:" in response.content
             )
+
+    def test_not_valid_method_for_import_file(self):
+        response = self.client.get(reverse("wagtailredirectimporter:import"))
+        self.assertEqual(response.status_code, 405)
