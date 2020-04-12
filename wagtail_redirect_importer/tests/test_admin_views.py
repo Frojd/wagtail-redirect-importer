@@ -327,6 +327,43 @@ class TestRedirectImporterAdminView(TestCase, WagtailTestUtils):
 
             self.assertEqual(Redirect.objects.all().count(), 2)
 
+    def test_import_tsv(self):
+        f = "{}/files/example.tsv".format(TEST_ROOT)
+        (_, filename) = os.path.split(f)
+
+        with open(f, "rb") as infile:
+            upload_file = SimpleUploadedFile(filename, infile.read())
+
+            self.assertEqual(Redirect.objects.all().count(), 0)
+
+            response = self.post(
+                {
+                    "import_file": upload_file,
+                    "input_format": get_input_format_index_by_name("TSV"),
+                }
+            )
+
+            self.assertEqual(
+                response.templates[0].name,
+                "wagtail_redirect_importer/confirm_import.html",
+            )
+
+            import_response = self.post_import(
+                {
+                    **response.context["form"].initial,
+                    "from_index": 0,
+                    "to_index": 1,
+                    "permanent": True,
+                }
+            )
+
+            self.assertEqual(
+                import_response.templates[0].name,
+                "wagtail_redirect_importer/import_summary.html",
+            )
+
+            self.assertEqual(Redirect.objects.all().count(), 2)
+
 
 def get_input_format_index_by_name(name):
     import_formats = get_import_formats()
