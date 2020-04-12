@@ -50,6 +50,13 @@ class Command(BaseCommand):
             type=str,
         )
 
+        parser.add_argument(
+            "--offset", help="Import starting with index", type=int, default=-1
+        )
+        parser.add_argument(
+            "--limit", help="Limit import to num items", type=int, default=-1
+        )
+
     def handle(self, *args, **options):
         src = options["src"]
         from_index = options.pop("from_index")
@@ -59,6 +66,8 @@ class Command(BaseCommand):
         dry_run = options.pop("dry_run")
         format_ = options.pop("format", None)
         ask = options.pop("ask")
+        offset = options.pop("offset")
+        limit = options.pop("limit")
 
         errors = []
         successes = 0
@@ -110,6 +119,12 @@ class Command(BaseCommand):
                 self.stdout.write("Using site: {}".format(site.hostname))
 
             self.stdout.write("Importing redirects:")
+
+            if offset != -1:
+                imported_data = imported_data[offset:]
+            if limit != -1:
+                imported_data = imported_data[:limit]
+
             for row in imported_data:
                 total += 1
 

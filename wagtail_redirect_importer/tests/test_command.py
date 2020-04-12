@@ -280,3 +280,55 @@ class ImportRedirectsCommandTest(TestCase):
         )
 
         self.assertEqual(Redirect.objects.count(), 0)
+
+    def test_offset_parameter(self):
+        invalid_file = tempfile.NamedTemporaryFile(mode="w+", encoding="utf-8")
+        invalid_file.write("from,to\n")
+        invalid_file.write("/one,http://one.test/\n")
+        invalid_file.write("/two,http://two.test/\n")
+        invalid_file.write("/three,http://three.test/\n")
+        invalid_file.write("/four,http://four.test/")
+        invalid_file.seek(0)
+
+        out = StringIO()
+        call_command(
+            "import_redirects",
+            src=invalid_file.name,
+            format="csv",
+            offset=2,
+            stdout=out,
+        )
+
+        redirects = Redirect.objects.all()
+
+        self.assertEqual(len(redirects), 2)
+        self.assertEqual(redirects[0].old_path, "/three")
+        self.assertEqual(redirects[0].redirect_link, "http://three.test/")
+        self.assertEqual(redirects[0].is_permanent, True)
+        self.assertEqual(redirects[1].old_path, "/four")
+        self.assertEqual(redirects[1].redirect_link, "http://four.test/")
+
+    def test_limit_parameter(self):
+        invalid_file = tempfile.NamedTemporaryFile(mode="w+", encoding="utf-8")
+        invalid_file.write("from,to\n")
+        invalid_file.write("/one,http://one.test/\n")
+        invalid_file.write("/two,http://two.test/\n")
+        invalid_file.write("/three,http://three.test/\n")
+        invalid_file.write("/four,http://four.test/")
+        invalid_file.seek(0)
+
+        out = StringIO()
+        call_command(
+            "import_redirects",
+            src=invalid_file.name,
+            format="csv",
+            limit=1,
+            stdout=out,
+        )
+
+        redirects = Redirect.objects.all()
+
+        self.assertEqual(len(redirects), 1)
+        self.assertEqual(redirects[0].old_path, "/one")
+        self.assertEqual(redirects[0].redirect_link, "http://one.test/")
+        self.assertEqual(redirects[0].is_permanent, True)
