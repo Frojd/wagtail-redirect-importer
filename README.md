@@ -1,3 +1,5 @@
+### Please note: This library is included in Wagtail 2.10 and therefore deprecated
+
 [![Build Status](https://travis-ci.org/frojd/wagtail-redirect-importer.svg?branch=develop)](https://travis-ci.org/frojd/wagtail-redirect-importer)
 # Wagtail Redirect Importer
 
